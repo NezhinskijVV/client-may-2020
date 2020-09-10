@@ -1,4 +1,6 @@
+package ru.itsjava;
 
+import ru.itsjava.service.ClientService;
 
 public class MyAppClient {
 

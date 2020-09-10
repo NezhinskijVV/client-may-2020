@@ -1,34 +1,34 @@
+package ru.itsjava.service;
+
 import lombok.SneakyThrows;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientService {
     public static final String HOST = "localhost";
     public static final int PORT = 8081;
+    private final MessageInputService consoleInputService = new MessageInputService(System.in);
 
     @SneakyThrows
     public void start() {
         Socket socket = new Socket(HOST, PORT);
         if (socket.isConnected()) {
-            System.out.println("Client connected");
+            System.out.println("I'm connected");
 
             new Thread(new SocketRunnable(socket)).start();
 
             PrintWriter serverWriter = new PrintWriter(socket.getOutputStream());
-            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
             System.out.println("Привет, Дорогой! \nВведи свой логин:");
-            String login = consoleReader.readLine();
+            String login = consoleInputService.readMessage();
             System.out.println("Введи свой пароль:");
-            String password = consoleReader.readLine();
+            String password = consoleInputService.readMessage();
             serverWriter.println("!@#$" + login + ":" + password);
             serverWriter.flush();
 
             String consoleInput;
-            while ((consoleInput = consoleReader.readLine()) != null) {
+            while ((consoleInput = consoleInputService.readMessage()) != null) {
                 serverWriter.println(consoleInput);
                 serverWriter.flush();
             }
