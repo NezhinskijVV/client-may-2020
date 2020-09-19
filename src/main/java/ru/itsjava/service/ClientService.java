@@ -24,10 +24,10 @@ public class ClientService {
             String login = consoleInputService.readMessage();
             System.out.println("Введи свой пароль:");
             String password = consoleInputService.readMessage();
-            serverWriter.println("!@#$" + login + ":" + password);
+            serverWriter.println("!@#$autho" + login + ":" + password);
             serverWriter.flush();
 
-            String consoleInput;
+            String consoleInput ;
             while ((consoleInput = consoleInputService.readMessage()) != null) {
                 serverWriter.println(consoleInput);
                 serverWriter.flush();
